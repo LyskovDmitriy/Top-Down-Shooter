@@ -25,11 +25,14 @@ public class CameraFollow : MonoBehaviour
 
 	void LateUpdate()
 	{
-		Vector3 newPosition = transform.position;
-		Vector2 targetPosition = target.position;
-		newPosition.x = Mathf.Clamp(targetPosition.x, minPosition.x, maxPosition.x);
-		newPosition.y = Mathf.Clamp(targetPosition.y, minPosition.y, maxPosition.y);
-		transform.position = Vector3.Lerp(transform.position, newPosition, speed * Time.deltaTime);
+		if (target != null)
+		{
+			Vector3 newPosition = transform.position;
+			Vector2 targetPosition = target.position;
+			newPosition.x = Mathf.Clamp(targetPosition.x, minPosition.x, maxPosition.x);
+			newPosition.y = Mathf.Clamp(targetPosition.y, minPosition.y, maxPosition.y);
+			transform.position = Vector3.Lerp(transform.position, newPosition, speed * Time.deltaTime);
+		}
 	}
 
 }

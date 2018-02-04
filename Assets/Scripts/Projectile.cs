@@ -23,20 +23,42 @@ public class Projectile : MonoBehaviour
 	void OnEnable () 
 	{
 		trail.Clear();
-		rb.velocity = transform.right * stats.speed;
+		rb.velocity = transform.right * stats.Speed;
 	}
 
 
-	void OnTriggerExit2D(Collider2D collider)
+	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (collider.CompareTag("ActiveZoneBorders"))
+		EnemyHealthManager enemyHealth = other.GetComponent<EnemyHealthManager>();
+		if (enemyHealth != null)
 		{
-			if (signature == null)
-			{
-				signature = GetComponent<PoolSignature>();
-			}
-
-			signature.ReturnToPool();
+			enemyHealth.GetHurt(stats.Damage);
+			ReturnObject();
 		}
+	}
+
+
+	void OnTriggerExit2D(Collider2D other)
+	{
+		if (other.CompareTag("ActiveZoneBorders"))
+		{
+			//Debug.Log("Leave zone");
+			if (gameObject.activeSelf)
+			{
+				ReturnObject();
+			}
+		}
+	}
+
+
+	void ReturnObject()
+	{
+		if (signature == null)
+		{
+			signature = GetComponent<PoolSignature>();
+		}
+
+		//Debug.Log("Return");
+		signature.ReturnToPool();
 	}
 }

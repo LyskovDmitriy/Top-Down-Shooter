@@ -34,11 +34,14 @@ public class PlayerController : MonoBehaviour
 	void Update () 
 	{
 		Move();
-		RotateGunTowardsCursor();
-		if (Input.GetButton("Fire1") && timeBetweenShotsCounter <= 0.0f)
+		if (Time.timeScale != 0.0f)
+		{
+			RotateGunTowardsCursor();
+		}
+		if (Input.GetButton("Fire1") && timeBetweenShotsCounter <= 0.0f && Time.timeScale != 0.0f)
 		{
 			Shoot();
-			timeBetweenShotsCounter = stats.timeBetweenShots;
+			timeBetweenShotsCounter = stats.TimeBetweenShots;
 		}
 		else
 		{
@@ -70,6 +73,7 @@ public class PlayerController : MonoBehaviour
 		GameObject projectile = currentProjectilePool.GetObject();
 		projectile.transform.rotation = gunHolder.rotation;
 		projectile.transform.position = positionToSpawnBullets.position;
+		//projectile.GetComponent<TrailRenderer>().Clear();
 		projectile.SetActive(true);
 	}
 }
