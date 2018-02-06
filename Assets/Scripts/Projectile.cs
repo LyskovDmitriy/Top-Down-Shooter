@@ -13,6 +13,29 @@ public class Projectile : MonoBehaviour
 	private PoolSignature signature;
 
 
+	protected virtual void OnTriggerEnter2D(Collider2D other)
+	{
+		EnemyHealthManager enemyHealth = other.GetComponent<EnemyHealthManager>();
+		if (enemyHealth != null)
+		{
+			enemyHealth.GetHurt(stats.Damage);
+			ReturnObject();
+		}
+	}
+
+
+	protected void ReturnObject()
+	{
+		if (signature == null)
+		{
+			signature = GetComponent<PoolSignature>();
+		}
+
+		//Debug.Log("Return");
+		signature.ReturnToPool();
+	}
+
+
 	void Awake()
 	{
 		rb = GetComponent<Rigidbody2D>();
@@ -25,18 +48,7 @@ public class Projectile : MonoBehaviour
 		trail.Clear();
 		rb.velocity = transform.right * stats.Speed;
 	}
-
-
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		EnemyHealthManager enemyHealth = other.GetComponent<EnemyHealthManager>();
-		if (enemyHealth != null)
-		{
-			enemyHealth.GetHurt(stats.Damage);
-			ReturnObject();
-		}
-	}
-
+		
 
 	void OnTriggerExit2D(Collider2D other)
 	{
@@ -48,17 +60,5 @@ public class Projectile : MonoBehaviour
 				ReturnObject();
 			}
 		}
-	}
-
-
-	void ReturnObject()
-	{
-		if (signature == null)
-		{
-			signature = GetComponent<PoolSignature>();
-		}
-
-		//Debug.Log("Return");
-		signature.ReturnToPool();
 	}
 }

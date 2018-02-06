@@ -7,17 +7,23 @@ public class PlayerController : MonoBehaviour
 
 	public Transform gunHolder;
 	public Transform positionToSpawnBullets;
-	public WeaponStats stats;
 	public Texture2D cursor;
 	public float moveSpeed;
 
 
 	private Camera mainCamera;
-	[SerializeField] private ObjectPool currentProjectilePool;
+	private WeaponStats stats;
+	private ObjectPool currentProjectilePool;
 	private Vector2 maxPosition;
 	private Vector2 minPosition;
 	private float timeBetweenShotsCounter;
 
+
+	public void SetWeapon(WeaponStats newWeapon, ObjectPool newPool)
+	{
+		stats = newWeapon;
+		currentProjectilePool = newPool;
+	}
 
 
 	void Start () 

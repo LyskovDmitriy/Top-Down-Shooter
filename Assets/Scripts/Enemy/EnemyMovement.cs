@@ -9,6 +9,7 @@ public class EnemyMovement : MonoBehaviour
 	public float timeToMove;
 	public float timeToWait;
 	public float angleDispersion;
+	public float distanceToFollowPlayer;
 
 
 	private static Transform player;
@@ -17,12 +18,15 @@ public class EnemyMovement : MonoBehaviour
 	private Vector3 direction;
 	private float timeToMoveCounter;
 	private float timeToWaitCounter;
+	private float distanceToFollowSqr;
 	private bool isMoving;
 
 
 	
 	void Start () 
 	{
+		distanceToFollowSqr = distanceToFollowPlayer * distanceToFollowPlayer;
+
 		if (player == null)
 		{
 			PlayerController playerController = FindObjectOfType<PlayerController>();
@@ -30,19 +34,44 @@ public class EnemyMovement : MonoBehaviour
 			{
 				player = playerController.transform;
 			}
+			else
+			{
+				enabled = false;
+				return;
+			}
 		}
 
 		isMoving = true;
-		RotateTowardsPlayer();
+		RotateTowardsPlayer(true);
 		timeToMoveCounter = timeToMove;
 	}
 	
 	
 	void Update () 
 	{
+		if (player == null)
+		{
+			enabled = false;
+			return;
+		}
+
 		if (isMoving)
 		{
 			//TODO follow player if he is in certain radius
+			float sqrDistanceToPlayer = (player.position - transform.position).sqrMagnitude;
+
+			if (sqrDistanceToPlayer < 0.01f)
+			{
+				timeToMoveCounter = timeToMove;
+				return;
+			}
+
+			if (sqrDistanceToPlayer < distanceToFollowSqr)
+			{
+				RotateTowardsPlayer(false);
+				timeToMoveCounter = timeToMove;
+			}
+
 			MoveTowardsPlayer();
 			timeToMoveCounter -= Time.deltaTime;
 
@@ -60,7 +89,7 @@ public class EnemyMovement : MonoBehaviour
 			{
 				isMoving = true;
 				timeToMoveCounter = timeToMove;
-				RotateTowardsPlayer();
+				RotateTowardsPlayer(true);
 			}
 		}
 	}
@@ -72,16 +101,14 @@ public class EnemyMovement : MonoBehaviour
 	}
 
 
-	void RotateTowardsPlayer()
+	void RotateTowardsPlayer(bool hasDispersion)
 	{
-		if (player == null)
-		{
-			enabled = false;
-			return;
-		}
 		direction = player.position - transform.position;
-		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + Random.Range(-angleDispersion / 2, angleDispersion / 2);
-		//direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0.0f);
+		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+		if (hasDispersion)
+		{
+			angle += Random.Range(-angleDispersion / 2, angleDispersion / 2);
+		}
 		transform.eulerAngles = Vector3.forward * angle;
 	}
 }

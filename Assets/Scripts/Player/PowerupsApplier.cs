@@ -8,10 +8,13 @@ public class PowerupsApplier : MonoBehaviour
 	public static PowerupsApplier instance;
 
 
+	public WeaponType currentWeapon;
 	public PowerupsInfo powerupsInfo;
+	public WeaponsCollection weaponsCollection;
 
 
 	private PlayerController playerController;
+	private PlayerHealthManager playerHealth;
 
 
 	public void Apply(PowerupType type)
@@ -24,7 +27,24 @@ public class PowerupsApplier : MonoBehaviour
 			case PowerupType.SlowMotion:
 				StartCoroutine(SlowDownTime());
 				break;
+			case PowerupType.HealthKit:
+				HealPlayer();
+				break;
+			case PowerupType.Explosion:
+				Explode();
+				break;
+			default:
+				Debug.LogWarning("Can't recognize powerup type");
+				break;
 		}
+	}
+
+
+	public void ChangeWeapon(WeaponType type)
+	{
+		WeaponStats currentWeapon = weaponsCollection.GetWeaponInfo(type);
+		ObjectPool pool = PoolsManager.instance.GetPool(type);
+		playerController.SetWeapon(currentWeapon, pool);
 	}
 
 
@@ -39,7 +59,14 @@ public class PowerupsApplier : MonoBehaviour
 			Destroy(gameObject);
 		}
 
-		playerController = FindObjectOfType<PlayerController>();
+		playerController = GetComponent<PlayerController>();
+		playerHealth = GetComponent<PlayerHealthManager>();
+	}
+
+
+	void Start()
+	{
+		ChangeWeapon(currentWeapon); //Starting weapon
 	}
 
 
@@ -58,9 +85,32 @@ public class PowerupsApplier : MonoBehaviour
 		Time.timeScale *= powerupsInfo.SlowDownMultiplier;
 		Time.fixedDeltaTime *= powerupsInfo.SlowDownMultiplier;
 
-		yield return new WaitForSeconds(powerupsInfo.SpeedIncreaseDuration * powerupsInfo.SlowDownMultiplier);
+		yield return new WaitForSeconds(powerupsInfo.SpeedIncreaseDuration * Time.timeScale);
 
 		Time.fixedDeltaTime /= powerupsInfo.SlowDownMultiplier;
 		Time.timeScale = 1.0f;
+	}
+
+
+	void Explode()
+	{
+		Instantiate(powerupsInfo.ExplosionParticles, transform.position, transform.rotation);
+		Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, powerupsInfo.ExplosionRadius);
+
+		for (int i = 0; i < enemies.Length; i++)
+		{
+			EnemyHealthManager enemyHealth = enemies[i].GetComponent<EnemyHealthManager>();
+
+			if (enemyHealth != null)
+			{
+				enemyHealth.GetHurt(1000);
+			}
+		}
+	}
+
+
+	void HealPlayer()
+	{
+		playerHealth.GetHurt(-powerupsInfo.HealthPerKit);
 	}
 }

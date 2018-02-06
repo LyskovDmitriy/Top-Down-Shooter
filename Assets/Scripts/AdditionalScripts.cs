@@ -10,5 +10,21 @@ public struct EnemyWave
 	public float timeBetweenSpawns;
 }
 
+[System.Serializable]
+public class WeaponInfoAndType
+{
+	public WeaponType type;
+	public WeaponStats stats;
+}
 
-public enum PowerupType { SpeedIncrease, SlowMotion }
+[System.Serializable]
+public struct ProjectilePoolInfo
+{
+	public WeaponType weaponType;
+	public GameObject projectilePrefab;
+	public ObjectPool projectilePool;
+}
+
+public enum PowerupType { SpeedIncrease, SlowMotion, HealthKit, Explosion }
+
+public enum WeaponType { Handgun, AssaultRifle, RocketLauncher }

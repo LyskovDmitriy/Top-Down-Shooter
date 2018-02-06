@@ -6,8 +6,6 @@ public class EnemyHealthManager : MonoBehaviour
 {
 
 	public GameObject bloodParticles;
-	public GameObject[] powerups; //TODO Can be reorganized through ScriptableObject
-	public float chanceToSpawnPowerup;
 	public int maxHealth;
 
 
@@ -34,17 +32,8 @@ public class EnemyHealthManager : MonoBehaviour
 
 	void Die()
 	{
-		if (Random.Range(0.0f, 1.0f) < chanceToSpawnPowerup)
-		{
-			SpawnRandomPowerup();
-		}
+		PowerupsSpawnManager.instance.TrySpawnPowerup(transform.position);
+
 		Destroy(gameObject);
-	}
-
-
-	void SpawnRandomPowerup()
-	{
-		int powerupIndex = Random.Range(0, powerups.Length);
-		Instantiate(powerups[powerupIndex], transform.position, Quaternion.identity);
 	}
 }

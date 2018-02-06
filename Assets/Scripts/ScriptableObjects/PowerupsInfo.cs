@@ -12,10 +12,20 @@ public class PowerupsInfo : ScriptableObject
 	public float SlowDownDuration { get { return slowDownDuration; } }
 	public float SlowDownMultiplier { get { return slowDownMultiplier; } }
 
+	public float HealthPerKit { get { return healthPerKit; } }
+
+	public GameObject ExplosionParticles { get { return explosionParticles; } }
+	public float ExplosionRadius { get { return explosionRadius; } }
+
 
 	[SerializeField] private float speedIncreaseDuration;
 	[SerializeField] private float speedMultiplier;
 
 	[SerializeField] private float slowDownDuration;
 	[SerializeField] private float slowDownMultiplier;
+
+	[SerializeField] private float healthPerKit;
+
+	[SerializeField] private GameObject explosionParticles;
+	[SerializeField] private float explosionRadius;
 }

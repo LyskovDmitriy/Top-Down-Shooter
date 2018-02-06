@@ -11,6 +11,15 @@ public class ObjectPool : MonoBehaviour
 	private Queue<GameObject> objects;
 
 
+	public void ClearPool()
+	{
+		while (objects.Count > 0)
+		{
+			Destroy(objects.Dequeue());
+		}
+	}
+
+
 	public GameObject GetObject()
 	{
 		if (objects.Count > 0)
