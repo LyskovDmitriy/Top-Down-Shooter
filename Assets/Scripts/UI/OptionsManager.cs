@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -12,7 +13,7 @@ public class OptionsManager : MonoBehaviour
 	public Toggle fullscreenToggle;
 
 
-	private Resolution[] availableResolutions;
+	private List<Resolution> availableResolutions;
 
 
 	public void ReturnToMainMenu()
@@ -37,18 +38,27 @@ public class OptionsManager : MonoBehaviour
 	
 	void Awake () 
 	{
-		Debug.Log(Screen.currentResolution.width + " " + Screen.currentResolution.height);
-		availableResolutions = Screen.resolutions;
+		//Debug.Log(Screen.currentResolution.width + " " + Screen.currentResolution.height);
+		availableResolutions = Screen.resolutions.ToList();
 		Resolution currentResolution = new Resolution();
 		currentResolution.height = Screen.height;
 		currentResolution.width = Screen.width;
-		Debug.Log(Screen.height + " " + Screen.width);
+		//Debug.Log(Screen.height + " " + Screen.width);
 		resolutionDropdown.ClearOptions();
-		List<string> resolutionStrings = new List<string>(availableResolutions.Length);
+		List<string> resolutionStrings = new List<string>(availableResolutions.Count);
 		int currentIndex = 0;
 
-		for (int i = 0; i < availableResolutions.Length; i++)
+		for (int i = 0; i < availableResolutions.Count; i++)
 		{
+//			if (i > 0) //check for identical resolutions
+//			{
+//				if (availableResolutions[i].width == availableResolutions[i - 1].width
+//				    && availableResolutions[i].height == availableResolutions[i - 1].height) //TODO find a better solution
+//				{
+//					continue;
+//				}
+//			}
+			
 			resolutionStrings.Add(availableResolutions[i].width + " X " + availableResolutions[i].height);
 			if (availableResolutions[i].width == currentResolution.width && 
 				availableResolutions[i].height == currentResolution.height)

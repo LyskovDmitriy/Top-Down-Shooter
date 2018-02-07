@@ -10,16 +10,26 @@ public class PowerupsSpawnManager : MonoBehaviour
 
 	public GameObject[] powerups; //TODO Can be reorganized through ScriptableObject
 	public GameObject[] weapons;
+	public GameObject firstPowerupToSpawn;
 	public float chanceToSpawnAnyPowerup;
 	public float chanceForPowerupToBeWeapon;
-	//TODO make firat powerup be a weapon
+
+
+	private bool hasSpawnedFirstPowerup;
 
 
 	public void TrySpawnPowerup(Vector3 position)
 	{
+		if (firstPowerupToSpawn!= null && !hasSpawnedFirstPowerup)
+		{
+			hasSpawnedFirstPowerup = true;
+			Instantiate(firstPowerupToSpawn, position, Quaternion.identity);
+			return;
+		}
+
 		if (Random.Range(0.0f, 1.0f) < chanceToSpawnAnyPowerup)
 		{
-			if (Random.Range(0.0f, 1.0f) < chanceForPowerupToBeWeapon)
+			if (Random.Range(0.0f, 1.0f) < chanceForPowerupToBeWeapon && weapons.Length > 0)
 			{
 				Instantiate(weapons[Random.Range(0, weapons.Length)], position, Quaternion.identity);
 			}
@@ -41,5 +51,7 @@ public class PowerupsSpawnManager : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
+
+		hasSpawnedFirstPowerup = false;
 	}
 }

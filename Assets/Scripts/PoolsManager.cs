@@ -9,6 +9,7 @@ public class PoolsManager : MonoBehaviour
 
 
 	public GameObject poolPrefab;
+	[Tooltip("A projectile pool should be created for each weapon type used in the scene")]
 	public ProjectilePoolInfo[] poolInfos;
 
 

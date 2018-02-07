@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour 
+public class EnemyFollowWithPause : MonoBehaviour 
 {
 
 	public float movespeed;
@@ -15,7 +15,6 @@ public class EnemyMovement : MonoBehaviour
 	private static Transform player;
 
 
-	private Vector3 direction;
 	private float timeToMoveCounter;
 	private float timeToWaitCounter;
 	private float distanceToFollowSqr;
@@ -103,7 +102,7 @@ public class EnemyMovement : MonoBehaviour
 
 	void RotateTowardsPlayer(bool hasDispersion)
 	{
-		direction = player.position - transform.position;
+		Vector3 direction = player.position - transform.position;
 		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 		if (hasDispersion)
 		{
