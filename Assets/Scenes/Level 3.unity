@@ -334,12 +334,12 @@ Prefab:
     - target: {fileID: 224302116490782974, guid: 546f75cfdbfb750459a5d9b4fbcb6a4c,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224302116490782974, guid: 546f75cfdbfb750459a5d9b4fbcb6a4c,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 546f75cfdbfb750459a5d9b4fbcb6a4c, type: 2}
@@ -1118,12 +1118,12 @@ Prefab:
     - target: {fileID: 114846041988938048, guid: b5fde06c9af62ee46a7087c6989a3844,
         type: 2}
       propertyPath: waves.Array.data[0].spawnNumber
-      value: 15
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 114846041988938048, guid: b5fde06c9af62ee46a7087c6989a3844,
         type: 2}
       propertyPath: waves.Array.data[0].timeBetweenSpawns
-      value: 1.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114846041988938048, guid: b5fde06c9af62ee46a7087c6989a3844,
         type: 2}
@@ -1139,7 +1139,7 @@ Prefab:
     - target: {fileID: 114846041988938048, guid: b5fde06c9af62ee46a7087c6989a3844,
         type: 2}
       propertyPath: waves.Array.data[1].timeBetweenSpawns
-      value: 1.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114846041988938048, guid: b5fde06c9af62ee46a7087c6989a3844,
         type: 2}
@@ -1150,12 +1150,12 @@ Prefab:
     - target: {fileID: 114846041988938048, guid: b5fde06c9af62ee46a7087c6989a3844,
         type: 2}
       propertyPath: waves.Array.data[2].spawnNumber
-      value: 10
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 114846041988938048, guid: b5fde06c9af62ee46a7087c6989a3844,
         type: 2}
       propertyPath: waves.Array.data[2].timeBetweenSpawns
-      value: 1.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114846041988938048, guid: b5fde06c9af62ee46a7087c6989a3844,
         type: 2}
@@ -1171,7 +1171,7 @@ Prefab:
     - target: {fileID: 114846041988938048, guid: b5fde06c9af62ee46a7087c6989a3844,
         type: 2}
       propertyPath: waves.Array.data[3].timeBetweenSpawns
-      value: 1.25
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5fde06c9af62ee46a7087c6989a3844, type: 2}

@@ -15,7 +15,8 @@ MonoBehaviour:
   speedMultiplier: 1.75
   slowDownDuration: 4
   slowDownMultiplier: 0.3
+  additionalPlayerSlowDownMultiplier: 1.25
   healthPerKit: 5
   explosionParticles: {fileID: 1115438760249926, guid: 8688065aa510a354a85a1a1f27203c00,
     type: 2}
-  explosionRadius: 5
+  explosionRadius: 4

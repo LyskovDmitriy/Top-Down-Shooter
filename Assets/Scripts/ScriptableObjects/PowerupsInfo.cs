@@ -11,6 +11,7 @@ public class PowerupsInfo : ScriptableObject
 
 	public float SlowDownDuration { get { return slowDownDuration; } }
 	public float SlowDownMultiplier { get { return slowDownMultiplier; } }
+	public float AdditionalPlayerSlowDownMultiplier { get { return additionalPlayerSlowDownMultiplier; } }
 
 	public float HealthPerKit { get { return healthPerKit; } }
 
@@ -23,6 +24,7 @@ public class PowerupsInfo : ScriptableObject
 
 	[SerializeField] private float slowDownDuration;
 	[SerializeField] private float slowDownMultiplier;
+	[SerializeField] private float additionalPlayerSlowDownMultiplier;
 
 	[SerializeField] private float healthPerKit;
 

@@ -1117,12 +1117,12 @@ Prefab:
     - target: {fileID: 114846041988938048, guid: b5fde06c9af62ee46a7087c6989a3844,
         type: 2}
       propertyPath: waves.Array.data[0].spawnNumber
-      value: 25
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 114846041988938048, guid: b5fde06c9af62ee46a7087c6989a3844,
         type: 2}
       propertyPath: waves.Array.data[0].timeBetweenSpawns
-      value: 1.5
+      value: 1.125
       objectReference: {fileID: 0}
     - target: {fileID: 114846041988938048, guid: b5fde06c9af62ee46a7087c6989a3844,
         type: 2}

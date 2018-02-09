@@ -84,9 +84,11 @@ public class PowerupsApplier : MonoBehaviour
 	{
 		Time.timeScale *= powerupsInfo.SlowDownMultiplier;
 		Time.fixedDeltaTime *= powerupsInfo.SlowDownMultiplier;
+		playerController.moveSpeed *= powerupsInfo.AdditionalPlayerSlowDownMultiplier;
 
 		yield return new WaitForSeconds(powerupsInfo.SpeedIncreaseDuration * Time.timeScale);
 
+		playerController.moveSpeed /= powerupsInfo.AdditionalPlayerSlowDownMultiplier;
 		Time.fixedDeltaTime /= powerupsInfo.SlowDownMultiplier;
 		Time.timeScale = 1.0f;
 	}
@@ -112,5 +114,15 @@ public class PowerupsApplier : MonoBehaviour
 	void HealPlayer()
 	{
 		playerHealth.GetHurt(-powerupsInfo.HealthPerKit);
+	}
+
+
+	void OnDestroy()
+	{
+		StopAllCoroutines();
+		if (Time.timeScale != 1.0f)
+		{
+			Time.timeScale = 1.0f;
+		}
 	}
 }

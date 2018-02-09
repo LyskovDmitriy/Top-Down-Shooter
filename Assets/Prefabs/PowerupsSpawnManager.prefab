@@ -54,5 +54,5 @@ MonoBehaviour:
   powerups: []
   weapons: []
   firstPowerupToSpawn: {fileID: 0}
-  chanceToSpawnAnyPowerup: 0.1
-  chanceForPowerupToBeWeapon: 0.25
+  chanceToSpawnAnyPowerup: 0.08
+  chanceForPowerupToBeWeapon: 0.175

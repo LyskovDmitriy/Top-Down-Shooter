@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
 	private Rigidbody2D rb;
 	private TrailRenderer trail;
 	private PoolSignature signature;
+	private int collisionNumber;
 
 
 	protected virtual void OnTriggerEnter2D(Collider2D other)
@@ -18,8 +19,12 @@ public class Projectile : MonoBehaviour
 		EnemyHealthManager enemyHealth = other.GetComponent<EnemyHealthManager>();
 		if (enemyHealth != null)
 		{
+			collisionNumber++;
 			enemyHealth.GetHurt(stats.Damage);
-			ReturnObject();
+			if (collisionNumber > stats.PiercingStrength)
+			{
+				ReturnObject();
+			}
 		}
 	}
 
@@ -45,8 +50,12 @@ public class Projectile : MonoBehaviour
 	
 	void OnEnable () 
 	{
-		trail.Clear();
+		if (trail != null)
+		{
+			trail.Clear();
+		}
 		rb.velocity = transform.right * stats.Speed;
+		collisionNumber = 0;
 	}
 		
 
