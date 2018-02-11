@@ -15,8 +15,11 @@ public class EnemyHealthManager : MonoBehaviour
 	public void GetHurt(float damage)
 	{
 		currentHealth -= damage;
-		Instantiate(bloodParticles, transform.position, transform.rotation); //TODO create a pool for particles (remove DestroyOverTime script)
 
+		if (bloodParticles != null)
+		{
+			Instantiate(bloodParticles, transform.position, transform.rotation); //TODO create a pool for particles (remove DestroyOverTime script)
+		}
 		if (currentHealth <= 0)
 		{
 			Die();

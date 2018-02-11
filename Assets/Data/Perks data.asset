@@ -8,10 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 695dba409efff8d4fa1baa4c35190a28, type: 3}
-  m_Name: Sniper Rifle info
+  m_Script: {fileID: 11500000, guid: 00268d8924b6a32498f99e031418f64f, type: 3}
+  m_Name: Perks data
   m_EditorClassIdentifier: 
-  damage: 5
-  timeBetweenShots: 0.75
-  speed: 40
-  piercingStrength: 3
+  fasterThanLightMovespeedMultiplier: 1.3
+  surgeonTimeToRestoreOneHealthPoint: 7.5
+  dodgerChanceToEvade: 0.33

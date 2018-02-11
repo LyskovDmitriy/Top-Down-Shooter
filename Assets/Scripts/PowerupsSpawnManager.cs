@@ -31,13 +31,25 @@ public class PowerupsSpawnManager : MonoBehaviour
 		{
 			if (Random.Range(0.0f, 1.0f) < chanceForPowerupToBeWeapon && weapons.Length > 0)
 			{
-				Instantiate(weapons[Random.Range(0, weapons.Length)], position, Quaternion.identity);
+				SpawnWeapon(position);
 			}
 			else
 			{
-				Instantiate(powerups[Random.Range(0, powerups.Length)], position, Quaternion.identity);
+				SpawnPowerup(position);
 			}
 		}
+	}
+
+
+	public void SpawnWeapon(Vector3 position)
+	{
+		Instantiate(weapons[Random.Range(0, weapons.Length)], position, Quaternion.identity);
+	}
+
+
+	public void SpawnPowerup(Vector3 position)
+	{
+		Instantiate(powerups[Random.Range(0, powerups.Length)], position, Quaternion.identity);
 	}
 
 

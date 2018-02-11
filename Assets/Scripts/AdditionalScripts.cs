@@ -28,3 +28,5 @@ public struct ProjectilePoolInfo
 public enum PowerupType { SpeedIncrease, SlowMotion, HealthKit, Explosion }
 
 public enum WeaponType { Handgun, AssaultRifle, RocketLauncher, SniperRifle, Blaster, UZI }
+
+public enum Perk { None, FasterThanLight, Surgeon, Dodger, RandomWeapon }

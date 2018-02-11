@@ -24,6 +24,11 @@ public class GameOverUI : MonoBehaviour
 	{
 		gameOverScreen.SetActive(true);
 		screenTitle.text = "Level completed";
+
+		if (!PlayerPrefs.HasKey(SceneManager.GetActiveScene().name))
+		{
+			PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);
+		}
 	}
 
 

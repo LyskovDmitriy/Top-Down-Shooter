@@ -53,6 +53,7 @@ public class Projectile : MonoBehaviour
 		if (trail != null)
 		{
 			trail.Clear();
+			trail.enabled = true;
 		}
 		rb.velocity = transform.right * stats.Speed;
 		collisionNumber = 0;
@@ -68,6 +69,15 @@ public class Projectile : MonoBehaviour
 			{
 				ReturnObject();
 			}
+		}
+	}
+
+
+	void OnDisable()
+	{
+		if (trail != null)
+		{
+			trail.enabled = false;
 		}
 	}
 }

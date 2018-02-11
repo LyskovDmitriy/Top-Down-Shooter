@@ -14,10 +14,18 @@ public class PlayerHealthManager : MonoBehaviour
 
 
 	private float currentHealth;
+	private float chanceToEvade;
 
 
 	public void GetHurt(float damage)
 	{
+		if (chanceToEvade != 0.0f)
+		{
+			if (Random.Range(0.0f, 1.0f) < chanceToEvade)
+			{
+				return;
+			}
+		}
 		currentHealth = Mathf.Clamp(currentHealth - damage, 0.0f, maxHealth);
 		healthBar.value = currentHealth;
 
@@ -28,11 +36,18 @@ public class PlayerHealthManager : MonoBehaviour
 	}
 
 
+	public void SetChanceToEvade(float evasion)
+	{
+		chanceToEvade = evasion;
+	}
+
+
 	void Start () 
 	{
 		currentHealth = maxHealth;
 		healthBar.maxValue = maxHealth;
 		healthBar.value = currentHealth;
+		chanceToEvade = 0.0f;
 
 		onPlayerDeath += Die;
 	}
