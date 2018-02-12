@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 114203063968646376}
   - component: {fileID: 114404817790431452}
   m_Layer: 0
-  m_Name: RatsSpawner
+  m_Name: Rats Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -279,7 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodParticles: {fileID: 1862104819262498, guid: 324f519d98a84f74c8a7a57b11dfbfe0,
     type: 2}
-  maxHealth: 20
+  maxHealth: 25
 --- !u!114 &114404817790431452
 MonoBehaviour:
   m_ObjectHideFlags: 1

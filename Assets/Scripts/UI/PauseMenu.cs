@@ -24,6 +24,7 @@ public class PauseMenu : MonoBehaviour
 
 	public void Pause()
 	{
+		CursorController.instance.SetDefaultCursor();
 		timeScaleBeforePause = Time.timeScale;
 		Time.timeScale = 0.0f;
 		pauseScreen.SetActive(true);
@@ -32,6 +33,7 @@ public class PauseMenu : MonoBehaviour
 
 	public void Resume()
 	{
+		CursorController.instance.SetShootCursor();
 		Time.timeScale = timeScaleBeforePause;
 		pauseScreen.SetActive(false);
 	}

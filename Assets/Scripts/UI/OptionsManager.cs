@@ -38,12 +38,10 @@ public class OptionsManager : MonoBehaviour
 	
 	void Awake () 
 	{
-		//Debug.Log(Screen.currentResolution.width + " " + Screen.currentResolution.height);
 		availableResolutions = Screen.resolutions.ToList();
 		Resolution currentResolution = new Resolution();
 		currentResolution.height = Screen.height;
 		currentResolution.width = Screen.width;
-		//Debug.Log(Screen.height + " " + Screen.width);
 		resolutionDropdown.ClearOptions();
 		List<string> resolutionStrings = new List<string>(availableResolutions.Count);
 		int currentIndex = 0;
@@ -72,5 +70,11 @@ public class OptionsManager : MonoBehaviour
 		resolutionDropdown.onValueChanged.AddListener(ChangeResolution);
 
 		fullscreenToggle.isOn = Screen.fullScreen;
+	}
+
+
+	void Start()
+	{
+		CursorController.instance.SetDefaultCursor();
 	}
 }

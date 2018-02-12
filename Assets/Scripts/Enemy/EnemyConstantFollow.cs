@@ -42,7 +42,7 @@ public class EnemyConstantFollow : MonoBehaviour
 
 		float sqrDistanceToPlayer = (player.position - transform.position).sqrMagnitude;
 
-		if (sqrDistanceToPlayer < 0.01f)
+		if (sqrDistanceToPlayer < 0.16f)
 		{
 			return;
 		}

@@ -7,8 +7,9 @@ public class PlayerController : MonoBehaviour
 
 	public Transform gunHolder;
 	public Transform positionToSpawnBullets;
-	public Texture2D cursor;
 	public float moveSpeed;
+	public float hurtSlowdownTime;
+	public float hurtSlowdownMultiplier;
 
 
 	private Camera mainCamera;
@@ -17,6 +18,8 @@ public class PlayerController : MonoBehaviour
 	private Vector2 maxPosition;
 	private Vector2 minPosition;
 	private float timeBetweenShotsCounter;
+	private float hurtSlowdownCounter;
+	private bool isSlownDown;
 
 
 	public void SetWeapon(WeaponStats newWeapon, ObjectPool newPool)
@@ -28,12 +31,13 @@ public class PlayerController : MonoBehaviour
 
 	void Start () 
 	{
-		Cursor.SetCursor(cursor, new Vector2(16, 16), CursorMode.Auto);
+		CursorController.instance.SetShootCursor();
 		mainCamera = Camera.main;
 		CircleCollider2D collider = GetComponent<CircleCollider2D>();
 		maxPosition = ActivePlayerZone.MaxPoint - new Vector2(collider.radius, collider.radius);
 		minPosition = ActivePlayerZone.MinPoint + new Vector2(collider.radius, collider.radius);
 		timeBetweenShotsCounter = 0;
+		PlayerHealthManager.onPlayerHurt += SlowDownOnHurt;
 	}
 	
 
@@ -52,6 +56,19 @@ public class PlayerController : MonoBehaviour
 		else
 		{
 			timeBetweenShotsCounter -= Time.deltaTime;
+		}
+
+		if (isSlownDown)
+		{
+			if (hurtSlowdownCounter <= 0.0f)
+			{
+				isSlownDown = false;
+				moveSpeed /= hurtSlowdownMultiplier;
+			}
+			else
+			{
+				hurtSlowdownCounter -= Time.deltaTime;
+			}
 		}
 	}
 
@@ -81,5 +98,22 @@ public class PlayerController : MonoBehaviour
 		projectile.transform.position = positionToSpawnBullets.position;
 		//projectile.GetComponent<TrailRenderer>().Clear();
 		projectile.SetActive(true);
+	}
+
+
+	void SlowDownOnHurt()
+	{
+		if (!isSlownDown)
+		{
+			isSlownDown = true;
+			moveSpeed *= hurtSlowdownMultiplier;
+		}
+		hurtSlowdownCounter = hurtSlowdownTime;
+	}
+
+
+	void OnDestroy()
+	{
+		PlayerHealthManager.onPlayerHurt -= SlowDownOnHurt;
 	}
 }

@@ -11,6 +11,7 @@ public class PowerupsSpawnManager : MonoBehaviour
 	public GameObject[] powerups; //TODO Can be reorganized through ScriptableObject
 	public GameObject[] weapons;
 	public GameObject firstPowerupToSpawn;
+	public GameObject powerupParticles;
 	public float chanceToSpawnAnyPowerup;
 	public float chanceForPowerupToBeWeapon;
 
@@ -24,6 +25,7 @@ public class PowerupsSpawnManager : MonoBehaviour
 		{
 			hasSpawnedFirstPowerup = true;
 			Instantiate(firstPowerupToSpawn, position, Quaternion.identity);
+			SpawnPowerupParticles(position);
 			return;
 		}
 
@@ -44,12 +46,14 @@ public class PowerupsSpawnManager : MonoBehaviour
 	public void SpawnWeapon(Vector3 position)
 	{
 		Instantiate(weapons[Random.Range(0, weapons.Length)], position, Quaternion.identity);
+		SpawnPowerupParticles(position);
 	}
 
 
 	public void SpawnPowerup(Vector3 position)
 	{
 		Instantiate(powerups[Random.Range(0, powerups.Length)], position, Quaternion.identity);
+		SpawnPowerupParticles(position);
 	}
 
 
@@ -65,5 +69,11 @@ public class PowerupsSpawnManager : MonoBehaviour
 		}
 
 		hasSpawnedFirstPowerup = false;
+	}
+
+
+	void SpawnPowerupParticles(Vector3 position)
+	{
+		Instantiate(powerupParticles, position, Quaternion.identity);
 	}
 }

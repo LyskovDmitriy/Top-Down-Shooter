@@ -12,6 +12,7 @@ public class RoundOverUI : MonoBehaviour
 
 	public void RoundOver()
 	{
+		CursorController.instance.SetDefaultCursor();
 		Time.timeScale = 0.0f;
 		roundOverScreen.SetActive(true);
 		roundNumberText.text = "Round " + SurvivalModeManager.instance.RoundNumber + " completed";
@@ -20,6 +21,7 @@ public class RoundOverUI : MonoBehaviour
 
 	void CloseRoundOverScreen()
 	{
+		CursorController.instance.SetShootCursor();
 		Time.timeScale = 1.0f;
 		roundOverScreen.SetActive(false);
 	}

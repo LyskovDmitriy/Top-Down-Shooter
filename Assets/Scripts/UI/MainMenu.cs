@@ -31,4 +31,10 @@ public class MainMenu : MonoBehaviour
 	{
 		Application.Quit();
 	}
+
+
+	void Start()
+	{
+		CursorController.instance.SetDefaultCursor();
+	}
 }

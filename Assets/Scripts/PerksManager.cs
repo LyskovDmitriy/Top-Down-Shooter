@@ -15,7 +15,12 @@ public class PerksManager : MonoBehaviour
 	private PlayerController playerController;
 	private PlayerHealthManager playerHealth;
 	private float surgeonCounter;
+	private float teleportationCounter;
+	private float powerupsRainCounter;
+	private bool perksActive;
 	private bool surgeonIsActive;
+	private bool teleportationIsActive;
+	private bool powerupsRainIsActive;
 
 
 	public void ApplyPerk(Perk perkToAdd)
@@ -35,6 +40,12 @@ public class PerksManager : MonoBehaviour
 				break;
 			case Perk.RandomWeapon:
 				RandomWeapon();
+				break;
+			case Perk.SpontaneousTeleportation:
+				ActivateTeleportation();
+				break;
+			case Perk.PowerupsRain:
+				ActivatePowerupsRain();
 				break;
 			default:
 				Debug.Log("Can't find perk to add");
@@ -59,31 +70,89 @@ public class PerksManager : MonoBehaviour
 			Destroy(gameObject);
 		}
 
+		EnemySpawner.onAllEnemiesDeath += StopPerksFunctioning;
+		PerksManager.onPerkApplied += ResumePerksFunctioning;
+
 		playerController = FindObjectOfType<PlayerController>();
 		playerHealth = FindObjectOfType<PlayerHealthManager>();
 
 		surgeonIsActive = false;
+		teleportationIsActive = false;
+		perksActive = true;
 	}
 
 
 	void Update()
 	{
-		if (surgeonIsActive)
+		if (playerController == null || !perksActive)
 		{
-			if (playerController != null)
-			{
-				if (surgeonCounter <= 0.0f)
-				{
-					playerHealth.GetHurt(-1.0f);
-					surgeonCounter = perksInfo.SurgeonTimeToRestoreOneHealthPoint;
-				}
-				else
-				{
-					surgeonCounter -= Time.deltaTime;
-				}
-			}
-
+			return;
 		}
+			
+		if (surgeonIsActive)
+		{		
+			if (surgeonCounter <= 0.0f)
+			{
+				playerHealth.GetHurt(-1.0f);
+				surgeonCounter = perksInfo.SurgeonTimeToRestoreOneHealthPoint;
+			}
+			else
+			{
+				surgeonCounter -= Time.deltaTime;
+			}
+		}
+
+		if (teleportationIsActive)
+		{
+			if (teleportationCounter <= 0)
+			{
+				TryTeleportate();
+				teleportationCounter = perksInfo.TeleportationTimeToTryTeleport;
+			}
+			else
+			{
+				teleportationCounter -= Time.deltaTime;
+			}
+		}
+
+		if (powerupsRainIsActive)
+		{
+			if (powerupsRainCounter <= 0)
+			{
+				TrySpawnPowerup();
+				powerupsRainCounter = perksInfo.PowerupsRainTimeToTrySpawn;
+			}
+			else
+			{
+				powerupsRainCounter -= Time.deltaTime;
+			}
+		}
+	}
+
+
+	void ResumePerksFunctioning()
+	{
+		perksActive = true;
+	}
+
+
+	void StopPerksFunctioning()
+	{
+		perksActive = false;
+	}
+
+
+	Vector3 GetRandomPositionInCameraView()
+	{
+		Vector3 randomPosition = Vector3.zero;
+		Camera camera = Camera.main;
+		float halfCameraHeight = camera.orthographicSize;
+		float halfCameraWidth = halfCameraHeight * camera.aspect;
+		float randomOffsetX = Random.Range(-halfCameraWidth, halfCameraWidth);
+		float randomOffsetY = Random.Range(-halfCameraHeight, halfCameraHeight);
+		randomPosition.x = camera.transform.position.x + randomOffsetX;
+		randomPosition.y = camera.transform.position.y + randomOffsetY;
+		return randomPosition;
 	}
 
 
@@ -108,16 +177,53 @@ public class PerksManager : MonoBehaviour
 
 	void RandomWeapon()
 	{
-		Vector3 positionForWeapon = Vector3.zero;
-
-		Camera camera = Camera.main;
-		float halfCameraHeight = camera.orthographicSize;
-		float halfCameraWidth = halfCameraHeight * camera.aspect;
-		float randomOffsetX = Random.Range(-halfCameraWidth, halfCameraWidth);
-		float randomOffsetY = Random.Range(-halfCameraHeight, halfCameraHeight);
-		positionForWeapon.x = camera.transform.position.x + randomOffsetX;
-		positionForWeapon.y = camera.transform.position.y + randomOffsetY;
-
+		Vector3 positionForWeapon = GetRandomPositionInCameraView();
 		PowerupsSpawnManager.instance.SpawnWeapon(positionForWeapon);
+	}
+
+
+	void ActivateTeleportation()
+	{
+		teleportationIsActive = true;
+		teleportationCounter = perksInfo.TeleportationTimeToTryTeleport;
+	}
+
+
+	void TryTeleportate()
+	{
+		if (Random.Range(0.0f, 1.0f) < perksInfo.TeleportationChance)
+		{
+			Vector3 position = Vector3.zero;
+			position.x = Random.Range(ActivePlayerZone.MinPoint.x, ActivePlayerZone.MaxPoint.x);
+			position.y = Random.Range(ActivePlayerZone.MinPoint.y, ActivePlayerZone.MaxPoint.y);
+
+			Instantiate(perksInfo.TeleportationParticles, playerController.transform.position, Quaternion.identity);
+			playerController.transform.position = position;
+			Instantiate(perksInfo.TeleportationParticles, position, Quaternion.identity);
+		}
+	}
+
+
+	void ActivatePowerupsRain()
+	{
+		powerupsRainIsActive = true;
+		powerupsRainCounter = perksInfo.PowerupsRainTimeToTrySpawn;
+	}
+
+
+	void TrySpawnPowerup()
+	{
+		if (Random.Range(0.0f, 1.0f) < perksInfo.PowerupsRainChance)
+		{
+			Vector3 positionForPowerup = GetRandomPositionInCameraView();
+			PowerupsSpawnManager.instance.SpawnPowerup(positionForPowerup);
+		}
+	}
+
+
+	void OnDestroy()
+	{
+		EnemySpawner.onAllEnemiesDeath -= StopPerksFunctioning;
+		PerksManager.onPerkApplied -= ResumePerksFunctioning;
 	}
 }

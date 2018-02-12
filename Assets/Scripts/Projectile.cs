@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
 	private TrailRenderer trail;
 	private PoolSignature signature;
 	private int collisionNumber;
+	private bool isReturned;
 
 
 	protected virtual void OnTriggerEnter2D(Collider2D other)
@@ -31,12 +32,16 @@ public class Projectile : MonoBehaviour
 
 	protected void ReturnObject()
 	{
+		if (isReturned)
+		{
+			return;
+		}
 		if (signature == null)
 		{
 			signature = GetComponent<PoolSignature>();
 		}
 
-		//Debug.Log("Return");
+		isReturned = true;
 		signature.ReturnToPool();
 	}
 
@@ -57,6 +62,7 @@ public class Projectile : MonoBehaviour
 		}
 		rb.velocity = transform.right * stats.Speed;
 		collisionNumber = 0;
+		isReturned = false;
 	}
 		
 

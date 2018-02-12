@@ -7,10 +7,12 @@ public class PlayerHealthManager : MonoBehaviour
 {
 
 	public static event System.Action onPlayerDeath;
+	public static event System.Action onPlayerHurt;
 
 
 	public Slider healthBar;
 	public int maxHealth;
+
 
 
 	private float currentHealth;
@@ -19,6 +21,11 @@ public class PlayerHealthManager : MonoBehaviour
 
 	public void GetHurt(float damage)
 	{
+		if (damage > 0 && onPlayerHurt != null)
+		{
+			onPlayerHurt();
+		}
+
 		if (chanceToEvade != 0.0f)
 		{
 			if (Random.Range(0.0f, 1.0f) < chanceToEvade)

@@ -14,6 +14,7 @@ public class GameOverUI : MonoBehaviour
 
 	public void GameOver()
 	{
+		CursorController.instance.SetDefaultCursor();
 		gameOverScreen.SetActive(true);
 		nextLevelButton.SetActive(false);
 		screenTitle.text = "You died!";
@@ -22,6 +23,7 @@ public class GameOverUI : MonoBehaviour
 
 	public void GameWon()
 	{
+		CursorController.instance.SetDefaultCursor();
 		gameOverScreen.SetActive(true);
 		screenTitle.text = "Level completed";
 

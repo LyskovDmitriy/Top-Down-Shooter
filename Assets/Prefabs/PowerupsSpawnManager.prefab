@@ -58,5 +58,7 @@ MonoBehaviour:
   - {fileID: 1444209223982174, guid: 6705042481e1d854497b1b9626a5b510, type: 2}
   weapons: []
   firstPowerupToSpawn: {fileID: 0}
+  powerupParticles: {fileID: 1088526160698890, guid: 8e1191b92ac0f424da8b97fa8d618c69,
+    type: 2}
   chanceToSpawnAnyPowerup: 0.085
   chanceForPowerupToBeWeapon: 0.25

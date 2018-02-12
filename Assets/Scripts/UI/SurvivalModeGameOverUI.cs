@@ -13,6 +13,7 @@ public class SurvivalModeGameOverUI : MonoBehaviour
 
 	public void GameOver()
 	{
+		CursorController.instance.SetDefaultCursor();
 		gameOverScreen.SetActive(true);
 		screenTitle.text = "You died!";
 	}

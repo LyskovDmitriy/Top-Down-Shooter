@@ -59,7 +59,7 @@ public class EnemyFollowWithPause : MonoBehaviour
 			//TODO follow player if he is in certain radius
 			float sqrDistanceToPlayer = (player.position - transform.position).sqrMagnitude;
 
-			if (sqrDistanceToPlayer < 0.01f)
+			if (sqrDistanceToPlayer < 0.16f)
 			{
 				timeToMoveCounter = timeToMove;
 				return;

@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
 
 	public EnemyWave[] waves;
 	public Slider spawnProgressBar;
+	public GameObject spawnParticles;
 	public float timeToFirstSpawn;
 	public float randomPositionMultiplier;
 
@@ -53,9 +54,8 @@ public class EnemySpawner : MonoBehaviour
 				enemy.transform.SetParent(transform);		
 				spawnedEnemies++;
 				spawnProgressBar.value = spawnedEnemies;
-				//Debug.Log("Spawn");
+				Instantiate(spawnParticles, enemyPosition, Quaternion.identity);
 				yield return new WaitForSeconds(waves[i].timeBetweenSpawns);
-				//TODO: Spawn particles
 			}
 		}
 		StartCoroutine(WaitForAllEnemiesDeath());
