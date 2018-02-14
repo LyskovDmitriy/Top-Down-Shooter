@@ -15,3 +15,4 @@ MonoBehaviour:
   timeBetweenShots: 0.75
   speed: 40
   piercingStrength: 3
+  clip: {fileID: 8300000, guid: 973ef819901bdef43a670716cdff67da, type: 3}

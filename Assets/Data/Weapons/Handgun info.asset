@@ -14,3 +14,5 @@ MonoBehaviour:
   damage: 1
   timeBetweenShots: 0.5
   speed: 30
+  piercingStrength: 0
+  clip: {fileID: 8300000, guid: 8985530d89455904fab6c4d790e13456, type: 3}

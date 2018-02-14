@@ -36,7 +36,6 @@ public class EnemyHealthManager : MonoBehaviour
 	void Die()
 	{
 		PowerupsSpawnManager.instance.TrySpawnPowerup(transform.position);
-
 		Destroy(gameObject);
 	}
 }

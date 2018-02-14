@@ -64,7 +64,6 @@ public class EnemySpawner : MonoBehaviour
 
 	IEnumerator WaitForAllEnemiesDeath()
 	{
-		//Debug.Log("Started waiting");
 		while (true)
 		{
 			if (FindObjectOfType<EnemyHealthManager>() == null)

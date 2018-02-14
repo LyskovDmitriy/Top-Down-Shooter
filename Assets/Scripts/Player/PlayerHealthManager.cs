@@ -14,25 +14,31 @@ public class PlayerHealthManager : MonoBehaviour
 	public int maxHealth;
 
 
-
+	private AudioManager audioManager;
 	private float currentHealth;
 	private float chanceToEvade;
 
 
 	public void GetHurt(float damage)
 	{
-		if (damage > 0 && onPlayerHurt != null)
-		{
-			onPlayerHurt();
-		}
-
-		if (chanceToEvade != 0.0f)
+		if (chanceToEvade != 0.0f && damage > 0)
 		{
 			if (Random.Range(0.0f, 1.0f) < chanceToEvade)
 			{
 				return;
 			}
 		}
+
+		if (damage > 0)
+		{
+			audioManager.PlayerHurt();
+
+			if (onPlayerHurt != null)
+			{
+				onPlayerHurt();
+			}
+		}
+
 		currentHealth = Mathf.Clamp(currentHealth - damage, 0.0f, maxHealth);
 		healthBar.value = currentHealth;
 
@@ -51,6 +57,8 @@ public class PlayerHealthManager : MonoBehaviour
 
 	void Start () 
 	{
+		audioManager = FindObjectOfType<AudioManager>();
+
 		currentHealth = maxHealth;
 		healthBar.maxValue = maxHealth;
 		healthBar.value = currentHealth;
@@ -62,6 +70,7 @@ public class PlayerHealthManager : MonoBehaviour
 
 	void Die()
 	{
+		audioManager.PlayerDeath();
 		Destroy(gameObject);
 	}
 

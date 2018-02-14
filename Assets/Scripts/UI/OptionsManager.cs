@@ -5,12 +5,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class OptionsManager : MonoBehaviour 
 {
 
+	public AudioMixer audioMixer;
+	public AudioManager audioManager;
 	public Dropdown resolutionDropdown;
 	public Toggle fullscreenToggle;
+	public Slider masterVolumeSlider;
+	public Slider musicVolumeSlider;
+	public Slider sfxVolumeSlider;
 
 
 	private List<Resolution> availableResolutions;
@@ -35,6 +41,24 @@ public class OptionsManager : MonoBehaviour
 		Screen.fullScreen = isFullscreen;
 	}
 
+
+	public void SetMasterVolume(float volume)
+	{
+		audioMixer.SetFloat("MasterVolume", volume);
+	}
+
+
+	public void SetMusicVolume(float volume)
+	{
+		audioMixer.SetFloat("MusicVolume", volume);
+	}
+
+
+	public void SetSFXVolume(float volume)
+	{
+		audioMixer.SetFloat("SFXVolume", volume);
+	}
+
 	
 	void Awake () 
 	{
@@ -48,15 +72,6 @@ public class OptionsManager : MonoBehaviour
 
 		for (int i = 0; i < availableResolutions.Count; i++)
 		{
-//			if (i > 0) //check for identical resolutions
-//			{
-//				if (availableResolutions[i].width == availableResolutions[i - 1].width
-//				    && availableResolutions[i].height == availableResolutions[i - 1].height) //TODO find a better solution
-//				{
-//					continue;
-//				}
-//			}
-			
 			resolutionStrings.Add(availableResolutions[i].width + " X " + availableResolutions[i].height);
 			if (availableResolutions[i].width == currentResolution.width && 
 				availableResolutions[i].height == currentResolution.height)
@@ -76,5 +91,29 @@ public class OptionsManager : MonoBehaviour
 	void Start()
 	{
 		CursorController.instance.SetDefaultCursor();
+		float masterVolume = 0;
+		float musicVolume = 0;
+		float sfxVolume = 0;
+		if (PlayerPrefs.HasKey("MasterVolume"))
+		{
+			masterVolume = PlayerPrefs.GetFloat("MasterVolume");
+		}
+		if (PlayerPrefs.HasKey("MusicVolume"))
+		{
+			musicVolume = PlayerPrefs.GetFloat("MusicVolume");
+		}
+		if (PlayerPrefs.HasKey("SFXVolume"))
+		{
+			sfxVolume = PlayerPrefs.GetFloat("SFXVolume");
+		}
+		masterVolumeSlider.value = masterVolume;
+		musicVolumeSlider.value = musicVolume;
+		sfxVolumeSlider.value = sfxVolume;
+	}
+
+
+	void OnDestroy()
+	{
+		audioManager.SetVolumeSetting();
 	}
 }

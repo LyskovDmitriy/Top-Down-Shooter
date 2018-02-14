@@ -19,7 +19,6 @@ public class MainMenuPartclesSpawner : MonoBehaviour
 	private float timeToSpawnCounter;
 
 
-	//TODO spawn particles out of the screen and direct them to the screen centre with random angle offset
 	void Start()
 	{
 		Camera mainCamera = Camera.main;

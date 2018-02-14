@@ -70,7 +70,6 @@ public class Projectile : MonoBehaviour
 	{
 		if (other.CompareTag("ActiveZoneBorders"))
 		{
-			//Debug.Log("Leave zone");
 			if (gameObject.activeSelf)
 			{
 				ReturnObject();

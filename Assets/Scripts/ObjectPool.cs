@@ -39,7 +39,6 @@ public class ObjectPool : MonoBehaviour
 
 	public void ReturnObject(GameObject returnedObject)
 	{
-		//Debug.Log("Return");
 		returnedObject.SetActive(false);
 		objects.Enqueue(returnedObject);
 	}

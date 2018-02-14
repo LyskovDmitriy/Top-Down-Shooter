@@ -8,7 +8,7 @@ public class PowerupsSpawnManager : MonoBehaviour
 	public static PowerupsSpawnManager instance;
 
 
-	public GameObject[] powerups; //TODO Can be reorganized through ScriptableObject
+	public GameObject[] powerups;
 	public GameObject[] weapons;
 	public GameObject firstPowerupToSpawn;
 	public GameObject powerupParticles;

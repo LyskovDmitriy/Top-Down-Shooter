@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 	public float hurtSlowdownMultiplier;
 
 
+	private AudioSource audioSource;
 	private Camera mainCamera;
 	private WeaponStats stats;
 	private ObjectPool currentProjectilePool;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
 	{
 		CursorController.instance.SetShootCursor();
 		mainCamera = Camera.main;
+		audioSource = GetComponent<AudioSource>();
 		CircleCollider2D collider = GetComponent<CircleCollider2D>();
 		maxPosition = ActivePlayerZone.MaxPoint - new Vector2(collider.radius, collider.radius);
 		minPosition = ActivePlayerZone.MinPoint + new Vector2(collider.radius, collider.radius);
@@ -96,7 +98,10 @@ public class PlayerController : MonoBehaviour
 		GameObject projectile = currentProjectilePool.GetObject();
 		projectile.transform.rotation = gunHolder.rotation;
 		projectile.transform.position = positionToSpawnBullets.position;
-		//projectile.GetComponent<TrailRenderer>().Clear();
+		if (stats.Clip != null)
+		{
+			audioSource.PlayOneShot(stats.Clip);
+		}
 		projectile.SetActive(true);
 	}
 

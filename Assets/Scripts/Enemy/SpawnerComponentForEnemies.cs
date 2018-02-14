@@ -58,7 +58,7 @@ public class SpawnerComponentForEnemies : MonoBehaviour
 		}
 
 		randomOffsetX *= (Random.Range(0, 2) == 0) ? -1 : 1; //gets random sign
-		randomOffsetY *= (Random.Range(0, 2) == 0) ? -1 : 1; //gets random sign
+		randomOffsetY *= (Random.Range(0, 2) == 0) ? -1 : 1; 
 		position.x = transform.position.x + randomOffsetX;
 		position.y = transform.position.y + randomOffsetY;
 		return position;

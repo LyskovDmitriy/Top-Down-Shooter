@@ -47,7 +47,6 @@ public class GameOverUI : MonoBehaviour
 		int nextLevelNumber = int.Parse(thisLevelName.Substring(levelNumberIndex + 1)) + 1;
 		string nextLevelName = thisLevelName.Substring(0, levelNumberIndex + 1) + nextLevelNumber;
 		SceneManager.LoadScene(nextLevelName); //throws an error when there is no next level
-		//Can be executed thorough a ScriptableObject containing all scenes
 	}
 
 

@@ -88,45 +88,10 @@ public class PerksManager : MonoBehaviour
 		{
 			return;
 		}
-			
-		if (surgeonIsActive)
-		{		
-			if (surgeonCounter <= 0.0f)
-			{
-				playerHealth.GetHurt(-1.0f);
-				surgeonCounter = perksInfo.SurgeonTimeToRestoreOneHealthPoint;
-			}
-			else
-			{
-				surgeonCounter -= Time.deltaTime;
-			}
-		}
-
-		if (teleportationIsActive)
-		{
-			if (teleportationCounter <= 0)
-			{
-				TryTeleportate();
-				teleportationCounter = perksInfo.TeleportationTimeToTryTeleport;
-			}
-			else
-			{
-				teleportationCounter -= Time.deltaTime;
-			}
-		}
-
-		if (powerupsRainIsActive)
-		{
-			if (powerupsRainCounter <= 0)
-			{
-				TrySpawnPowerup();
-				powerupsRainCounter = perksInfo.PowerupsRainTimeToTrySpawn;
-			}
-			else
-			{
-				powerupsRainCounter -= Time.deltaTime;
-			}
-		}
+		//checks whether perk's methods should be called
+		SurgeonUsageCheck();
+		TeleportationUsageCheck();
+		PowerupsRainCheck();
 	}
 
 
@@ -134,8 +99,7 @@ public class PerksManager : MonoBehaviour
 	{
 		perksActive = true;
 	}
-
-
+		
 	void StopPerksFunctioning()
 	{
 		perksActive = false;
@@ -169,6 +133,23 @@ public class PerksManager : MonoBehaviour
 	}
 
 
+	void SurgeonUsageCheck()
+	{
+		if (surgeonIsActive)
+		{		
+			if (surgeonCounter <= 0.0f)
+			{
+				playerHealth.GetHurt(-1.0f);
+				surgeonCounter = perksInfo.SurgeonTimeToRestoreOneHealthPoint;
+			}
+			else
+			{
+				surgeonCounter -= Time.deltaTime;
+			}
+		}
+	}
+
+
 	void Dodger()
 	{
 		playerHealth.SetChanceToEvade(perksInfo.DodgerChanceToEvade);
@@ -188,7 +169,6 @@ public class PerksManager : MonoBehaviour
 		teleportationCounter = perksInfo.TeleportationTimeToTryTeleport;
 	}
 
-
 	void TryTeleportate()
 	{
 		if (Random.Range(0.0f, 1.0f) < perksInfo.TeleportationChance)
@@ -203,20 +183,52 @@ public class PerksManager : MonoBehaviour
 		}
 	}
 
+	void TeleportationUsageCheck()
+	{
+		if (teleportationIsActive)
+		{
+			if (teleportationCounter <= 0)
+			{
+				TryTeleportate();
+				teleportationCounter = perksInfo.TeleportationTimeToTryTeleport;
+			}
+			else
+			{
+				teleportationCounter -= Time.deltaTime;
+			}
+		}
+	}
+
 
 	void ActivatePowerupsRain()
 	{
 		powerupsRainIsActive = true;
 		powerupsRainCounter = perksInfo.PowerupsRainTimeToTrySpawn;
 	}
-
-
+		
 	void TrySpawnPowerup()
 	{
 		if (Random.Range(0.0f, 1.0f) < perksInfo.PowerupsRainChance)
 		{
 			Vector3 positionForPowerup = GetRandomPositionInCameraView();
 			PowerupsSpawnManager.instance.SpawnPowerup(positionForPowerup);
+		}
+	}
+
+
+	void PowerupsRainCheck()
+	{
+		if (powerupsRainIsActive)
+		{
+			if (powerupsRainCounter <= 0)
+			{
+				TrySpawnPowerup();
+				powerupsRainCounter = perksInfo.PowerupsRainTimeToTrySpawn;
+			}
+			else
+			{
+				powerupsRainCounter -= Time.deltaTime;
+			}
 		}
 	}
 
